@@ -1,24 +1,24 @@
-# DSC212: Graph Theory - Modularity on the Karate Club Graph
+# Modularity on the Karate Club Graph
 
-This repository contains the solution for the Research Assignment on "Modularity on the Karate Club Graph" as part of the DSC212 course.
+A project for **DSC212: Graph Theory Module**.
 
-## Project Overview
+## 📜 Abstract
 
-The goal of this project is to implement a recursive spectral modularity partitioning algorithm to detect communities in the famous Zachary's Karate Club graph. The solution is contained within a single Jupyter Notebook (`.ipynb`) that runs from top-to-bottom.
+This project implements a **spectral modularity maximization method** from scratch. It applies this algorithm to the classic **Zachary's Karate Club network**, a famous real-world social network of 34 members (nodes) and 78 friendships (edges).
 
-### Tasks Completed
-The notebook successfully implements all the required tasks:
--   **Recursive Spectral Partitioning:** Implements the algorithm to recursively split the graph based on the leading eigenvector of the modularity matrix ($B$).
--   **Community Visualization:** Generates plots of the graph after each split, coloring nodes by their current community.
--   **Node Metrics:** Computes four key node metrics (Degree Centrality, Betweenness Centrality, Closeness Centrality, and Clustering Coefficient) at each iteration.
--   **Metric Evolution:** Plots the evolution of these metrics for each node across all iterations.
--   **Discussion:** Includes a short discussion analyzing which nodes remain central and how community structure influences the metrics.
+The goal is to use the graph's structure *before* a real-life conflict split the club to see if our algorithm can computationally **discover the social "fault lines"** and correctly predict the two factions that emerged (one led by the instructor, "Mr. Hi," and one by the club administrator).
 
-## How to Run
+## 🔬 The Method: Recursive Spectral Bipartition
 
-This notebook is designed to run from top-to-bottom without any manual edits.
+We are trying to find the optimal division of the network into communities. Modularity, $Q$, is a quality score that measures how "surprising" a division is compared to a random null model.
 
-### 1. Requirements
-You will need the following Python libraries. You can install them using `pip`:
-```bash
-pip install networkx numpy matplotlib jupyter
+### The Modularity Matrix
+
+The core of this method is the **modularity matrix**, $B$:
+
+$$B = A - \frac{kk^T}{2m}$$
+
+* $A$ is the **adjacency matrix** (the actual connections).
+* $\frac{kk^T}{2m}$ is the **expected number of edges** between nodes in a random graph with the same node degrees.
+
+The modularity score $Q$ for any given two-way split (encoded in a vector $s \in \{-1, +1\}^n
